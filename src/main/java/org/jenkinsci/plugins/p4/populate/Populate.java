@@ -11,22 +11,41 @@ public abstract class Populate implements ExtensionPoint, Describable<Populate>,
 
 	private static final long serialVersionUID = 1L;
 
-	private final boolean have; // ! sync '-p'
-	private final boolean force; // sync '-f'
-	private final boolean modtime;
-	private final boolean quiet; // task '-q'
-	private final String pin;
-	private final ParallelSync parallel;
+	protected boolean have; // ! sync '-p'
+	protected boolean force; // sync '-f'
+	protected boolean modtime;
+	protected boolean quiet; // task '-q'
+    protected String pin;
+    protected ParallelSync parallel;
 
-	public Populate(boolean have, boolean force, boolean modtime, boolean quiet, String pin, ParallelSync parallel) {
+	// auto clean only
+	protected boolean replace;
+	protected boolean delete;
+    
+    // sync only
+    protected boolean revert;
+
+	public Populate(boolean have, boolean force, boolean modtime, boolean quiet, String pin, ParallelSync parallel,
+			boolean replace, boolean delete, boolean revert) {
+		Set(have, force, modtime, quiet, pin, parallel,
+			replace, delete, revert);
+	}
+
+	protected void Set(boolean have, boolean force, boolean modtime, boolean quiet, String pin, ParallelSync parallel,
+			boolean replace, boolean delete, boolean revert) {
 		this.have = have;
 		this.force = force;
 		this.modtime = modtime;
 		this.pin = pin;
 		this.quiet = quiet;
 		this.parallel = parallel;
+
+		this.replace = replace;
+		this.delete = delete;
+		this.revert = revert;
 	}
 
+	// variables
 	public boolean isHave() {
 		return have;
 	}
@@ -51,6 +70,21 @@ public abstract class Populate implements ExtensionPoint, Describable<Populate>,
 		return parallel;
 	}
 
+	// auto clean only
+	public boolean isReplace() {
+		return replace;
+	}
+
+	public boolean isDelete() {
+		return delete;
+	}
+
+	// sync only
+	public boolean isRevert() {
+		return revert;
+	}
+
+	// other
 	public PopulateDescriptor getDescriptor() {
 		Jenkins j = Jenkins.getInstance();
 		if (j != null) {
@@ -65,5 +99,9 @@ public abstract class Populate implements ExtensionPoint, Describable<Populate>,
 			return j.<Populate, PopulateDescriptor> getDescriptorList(Populate.class);
 		}
 		return null;
+	}
+
+	public boolean implementsPopulateType(Class populateClass) {
+		return getClass().isInstance(populateClass);
 	}
 }

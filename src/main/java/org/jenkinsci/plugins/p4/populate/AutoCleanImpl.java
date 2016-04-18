@@ -8,31 +8,20 @@ public class AutoCleanImpl extends Populate {
 
 	private static final long serialVersionUID = 1L;
 
-	private final boolean replace;
-	private final boolean delete;
+	// usess replace, delete
 
 	@DataBoundConstructor
-	public AutoCleanImpl(boolean replace, boolean delete, boolean modtime, boolean quiet, String pin,
-			ParallelSync parallel) {
+    public AutoCleanImpl(boolean have, boolean force, boolean modtime, boolean quiet, String pin, ParallelSync parallel,
+                         boolean replace, boolean delete, boolean revert) {
 		// normal sync; no -f, no -p
-		super(true, false, modtime, quiet, pin, parallel);
-		this.replace = replace;
-		this.delete = delete;
+		super(true, false, modtime, quiet, pin, parallel,
+			replace, delete, false);
 	}
 
 	// Default for test cases
 	public AutoCleanImpl() {
-		super(true, true, false, false, null, null);
-		this.replace = false;
-		this.delete = false;
-	}
-
-	public boolean isReplace() {
-		return replace;
-	}
-
-	public boolean isDelete() {
-		return delete;
+		super(true, true, false, false, null, null,
+			false, false, false);
 	}
 
 	@Extension

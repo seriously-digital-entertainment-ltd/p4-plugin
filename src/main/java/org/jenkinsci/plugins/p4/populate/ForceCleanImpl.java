@@ -14,8 +14,10 @@ public class ForceCleanImpl extends Populate {
 	 * @param have
 	 */
 	@DataBoundConstructor
-	public ForceCleanImpl(boolean have, boolean modtime, boolean quiet, String pin, ParallelSync parallel) {
-		super(have, true, modtime, quiet, pin, parallel);
+	public ForceCleanImpl(boolean have, boolean modtime, boolean quiet, String pin, ParallelSync parallel,
+			boolean replace, boolean delete, boolean revert) {
+		super(have, true, modtime, quiet, pin, parallel,
+			false, false, false);
 	}
 
 	@Extension

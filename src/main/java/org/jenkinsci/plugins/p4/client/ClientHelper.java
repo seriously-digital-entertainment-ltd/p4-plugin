@@ -176,7 +176,7 @@ public class ClientHelper extends ConnectionHelper {
 		String revisions = path + "@" + buildChange;
 
 		// Sync files
-		if (populate instanceof CheckOnlyImpl) {
+		if (populate.implementsPopulateType(CheckOnlyImpl.class)) {
 			syncHaveList(revisions, populate);
 		} else {
 			syncFiles(revisions, populate);
@@ -343,24 +343,22 @@ public class ClientHelper extends ConnectionHelper {
 		log("");
 		String path = iclient.getRoot() + "/...";
 
-		if (populate instanceof AutoCleanImpl) {
+		if (populate.implementsPopulateType(AutoCleanImpl.class)) {
 			tidyAutoCleanImpl(path, populate);
 		}
 
-		if (populate instanceof ForceCleanImpl) {
+		if (populate.implementsPopulateType(ForceCleanImpl.class)) {
 			tidyForceSyncImpl(path, populate);
 		}
 
-		if (populate instanceof SyncOnlyImpl) {
+		if (populate.implementsPopulateType(SyncOnlyImpl.class)) {
 			tidySyncOnlyImpl(path, populate);
 		}
 
 	}
 
 	private void tidySyncOnlyImpl(String path, Populate populate) throws Exception {
-		SyncOnlyImpl syncOnly = (SyncOnlyImpl) populate;
-
-		if (syncOnly.isRevert()) {
+		if (populate.isRevert()) {
 			tidyPending(path);
 		}
 	}
@@ -374,7 +372,7 @@ public class ClientHelper extends ConnectionHelper {
 
 		// Only use quiet populate option to insure a clean sync
 		boolean quiet = populate.isQuiet();
-		Populate clean = new AutoCleanImpl(false, false, false, quiet, null, null);
+		Populate clean = new AutoCleanImpl(false, false, false, quiet, null, null, false, false, false);
 		syncFiles(revisions, clean);
 
 		// remove all files from workspace
@@ -440,8 +438,8 @@ public class ClientHelper extends ConnectionHelper {
 		}
 
 		// Set options
-		boolean delete = ((AutoCleanImpl) populate).isDelete();
-		boolean replace = ((AutoCleanImpl) populate).isReplace();
+		boolean delete = populate.isDelete();
+		boolean replace = populate.isReplace();
 
 		String[] base = { "-w", "-f" };
 		List<String> list = new ArrayList<String>();
@@ -486,8 +484,8 @@ public class ClientHelper extends ConnectionHelper {
 		TimeTask timer = new TimeTask();
 		log("P4 Task: tidying workspace to match have list.");
 
-		boolean delete = ((AutoCleanImpl) populate).isDelete();
-		boolean replace = ((AutoCleanImpl) populate).isReplace();
+		boolean delete = populate.isDelete();
+		boolean replace = populate.isReplace();
 
 		// check status - find all missing, changed or added files
 		String[] base = { "-n", "-a", "-e", "-d", "-l", "-f" };

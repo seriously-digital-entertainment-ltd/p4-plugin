@@ -569,7 +569,8 @@ public class ConnectionTest {
 		ManualWorkspaceImpl workspace = new ManualWorkspaceImpl("none", false, client, spec);
 
 		// Pin at label auto15
-		Populate populate = new AutoCleanImpl(true, true, false, false, "auto15", null);
+		//Populate populate = new AutoCleanImpl(true, true, false, false, "auto15", null);
+		Populate populate = new AutoCleanImpl(false, false, false, false, "auto15", null, true, true, false);
 		PerforceScm scm = new PerforceScm(credential, workspace, populate);
 		project.setScm(scm);
 		project.save();
@@ -605,7 +606,8 @@ public class ConnectionTest {
 		ManualWorkspaceImpl workspace = new ManualWorkspaceImpl("none", false, client, spec);
 
 		// Pin at label auto15
-		Populate populate = new AutoCleanImpl(true, true, false, false, "auto15", null);
+		//Populate populate = new AutoCleanImpl(true, true, false, false, "auto15", null);
+		Populate populate = new AutoCleanImpl(false, false, false, false, "auto15", null, true, true, false);
 		List<Filter> filter = new ArrayList<Filter>();
 		FilterPerChangeImpl inc = new FilterPerChangeImpl(true);
 		filter.add(inc);
@@ -645,7 +647,8 @@ public class ConnectionTest {
 		FreeStyleProject project = jenkins.createFreeStyleProject("Manual_Modtime");
 		ManualWorkspaceImpl workspace = new ManualWorkspaceImpl("none", false, client, spec);
 		boolean isModtime = true;
-		Populate populate = new AutoCleanImpl(true, true, isModtime, false, null, null);
+		//Populate populate = new AutoCleanImpl(true, true, isModtime, false, null, null);
+		Populate populate = new AutoCleanImpl(false, false, isModtime, false, "auto15", null, true, true, false);
 		PerforceScm scm = new PerforceScm(credential, workspace, populate);
 		project.setScm(scm);
 		project.save();
