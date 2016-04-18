@@ -15,10 +15,6 @@
 		<f:dropdownDescriptorSelector field="populate"/>
 	</f:entry>
 	
-	<f:entry title="Populate options (Env var)">
-		<f:textbox field="populateEnvVar"/>
-	</f:entry>
-	
 	<f:entry title="Polling build filters">	
 		<f:repeatableHeteroProperty field="filter" hasHeader="true" addCaption="Add new build filter"/>
  	</f:entry>
