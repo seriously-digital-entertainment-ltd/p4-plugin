@@ -150,7 +150,7 @@ public class ConnectionTest {
 		FreeStyleProject project = jenkins
 				.createFreeStyleProject("Static-Head");
 		Workspace workspace = new StaticWorkspaceImpl("none", false, "test.ws");
-		Populate populate = new AutoCleanImpl(true, true, false, false, null);
+		Populate populate = new AutoCleanImpl(false, false, false, false, null, true, true, false);
 		PerforceScm scm = new PerforceScm(credential, workspace, populate);
 		project.setScm(scm);
 		project.save();
@@ -172,7 +172,7 @@ public class ConnectionTest {
 		FreeStyleProject project = jenkins
 				.createFreeStyleProject("Static-Head");
 		Workspace workspace = new StaticWorkspaceImpl("none", false, "test.ws");
-		Populate populate = new AutoCleanImpl(true, true, false, false, null);
+		Populate populate = new AutoCleanImpl(false, false, false, false, null, true, true, false);
 		PerforceScm scm = new PerforceScm(credential, workspace, populate);
 		project.setScm(scm);
 		project.save();
@@ -208,7 +208,7 @@ public class ConnectionTest {
 				.createFreeStyleProject("Manual-Head");
 		ManualWorkspaceImpl workspace = new ManualWorkspaceImpl("none", true,
 				client, spec);
-		Populate populate = new AutoCleanImpl(true, true, false, false, null);
+		Populate populate = new AutoCleanImpl(false, false, false, false, null, true, true, false);
 		PerforceScm scm = new PerforceScm(credential, workspace, populate);
 		project.setScm(scm);
 		project.save();
@@ -235,7 +235,7 @@ public class ConnectionTest {
 				.createFreeStyleProject("Static-Change");
 		StaticWorkspaceImpl workspace = new StaticWorkspaceImpl("none", false,
 				"test.ws");
-		Populate populate = new AutoCleanImpl(true, true, false, false, null);
+		Populate populate = new AutoCleanImpl(false, false, false, false, null, true, true, false);
 		PerforceScm scm = new PerforceScm(credential, workspace, populate);
 		project.setScm(scm);
 		project.save();
@@ -292,7 +292,7 @@ public class ConnectionTest {
 				.createFreeStyleProject("Static-Change");
 		StaticWorkspaceImpl workspace = new StaticWorkspaceImpl("none", false,
 				"test.ws");
-		Populate populate = new AutoCleanImpl(true, true, false, false, null);
+		Populate populate = new AutoCleanImpl(false, false, false, false, null, true, true, false);
 		PerforceScm scm = new PerforceScm(credential, workspace, null,
 				populate, browser);
 		project.setScm(scm);
@@ -354,7 +354,7 @@ public class ConnectionTest {
 				.createFreeStyleProject("Static-Shelf");
 		TemplateWorkspaceImpl workspace = new TemplateWorkspaceImpl("none",
 				false, client, format);
-		Populate populate = new AutoCleanImpl(true, true, false, false, null);
+		Populate populate = new AutoCleanImpl(false, false, false, false, null, true, true, false);
 		PerforceScm scm = new PerforceScm(credential, workspace, populate);
 		project.setScm(scm);
 		project.save();
@@ -407,7 +407,7 @@ public class ConnectionTest {
 				.createFreeStyleProject("Manual-Head");
 		ManualWorkspaceImpl workspace = new ManualWorkspaceImpl("none", false,
 				client, spec);
-		Populate populate = new AutoCleanImpl(true, true, false, false, null);
+		Populate populate = new AutoCleanImpl(false, false, false, false, null, true, true, false);
 		PerforceScm scm = new PerforceScm(credential, workspace, populate);
 		project.setScm(scm);
 		project.save();
@@ -461,7 +461,7 @@ public class ConnectionTest {
 				.createFreeStyleProject("Template-Head");
 		TemplateWorkspaceImpl workspace = new TemplateWorkspaceImpl("none",
 				false, client, format);
-		Populate populate = new AutoCleanImpl(true, true, false, false, null);
+		Populate populate = new AutoCleanImpl(false, false, false, false, null, true, true, false);
 		PerforceScm scm = new PerforceScm(credential, workspace, populate);
 		project.setScm(scm);
 		project.save();
@@ -501,7 +501,7 @@ public class ConnectionTest {
 				.createFreeStyleProject("Stream-Head");
 		StreamWorkspaceImpl workspace = new StreamWorkspaceImpl("none", false,
 				stream, format);
-		Populate populate = new AutoCleanImpl(true, true, false, false, null);
+		Populate populate = new AutoCleanImpl(false, false, false, false, null, true, true, false);
 		PerforceScm scm = new PerforceScm(credential, workspace, populate);
 		project.setScm(scm);
 		project.save();
@@ -535,7 +535,7 @@ public class ConnectionTest {
 
 		FreeStyleProject project = jenkins.createFreeStyleProject("TPI83");
 		Workspace workspace = new StaticWorkspaceImpl("none", false, "test.ws");
-		Populate populate = new AutoCleanImpl(true, true, false, false, null);
+		Populate populate = new AutoCleanImpl(false, false, false, false, null, true, true, false);
 		PerforceScm scm = new PerforceScm(credential, workspace, populate);
 		project.setScm(scm);
 		project.save();
@@ -565,7 +565,7 @@ public class ConnectionTest {
 				.createFreeStyleProject("Template-Head");
 		TemplateWorkspaceImpl workspace = new TemplateWorkspaceImpl("none",
 				false, client, format);
-		Populate populate = new AutoCleanImpl(true, true, false, false, null);
+		Populate populate = new AutoCleanImpl(false, false, false, false, null, true, true, false);
 		PerforceScm scm = new PerforceScm(credential, workspace, populate);
 		project.setScm(scm);
 		project.save();
@@ -605,8 +605,7 @@ public class ConnectionTest {
 				client, spec);
 
 		// Pin at label auto15
-		Populate populate = new AutoCleanImpl(true, true, false, false,
-				"auto15");
+		Populate populate = new AutoCleanImpl(false, false, false, false, "auto15", true, true, false);
 		PerforceScm scm = new PerforceScm(credential, workspace, populate);
 		project.setScm(scm);
 		project.save();
@@ -646,8 +645,7 @@ public class ConnectionTest {
 				client, spec);
 
 		// Pin at label auto15
-		Populate populate = new AutoCleanImpl(true, true, false, false,
-				"auto15");
+		Populate populate = new AutoCleanImpl(false, false, false, false, "auto15", true, true, false);
 		List<Filter> filter = new ArrayList<Filter>();
 		FilterPerChangeImpl inc = new FilterPerChangeImpl(true);
 		filter.add(inc);
@@ -692,8 +690,7 @@ public class ConnectionTest {
 		ManualWorkspaceImpl workspace = new ManualWorkspaceImpl("none", false,
 				client, spec);
 		boolean isModtime = true;
-		Populate populate = new AutoCleanImpl(true, true, isModtime, false,
-				null);
+		Populate populate = new AutoCleanImpl(false, false, isModtime, false, null, true, true, false);
 		PerforceScm scm = new PerforceScm(credential, workspace, populate);
 		project.setScm(scm);
 		project.save();
