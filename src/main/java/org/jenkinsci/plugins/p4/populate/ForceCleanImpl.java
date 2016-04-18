@@ -6,7 +6,7 @@ import org.kohsuke.stapler.DataBoundConstructor;
 
 public class ForceCleanImpl extends Populate {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 2L;
 	
 	/**
 	 * Force sync of workspace (optional have update)
@@ -14,9 +14,10 @@ public class ForceCleanImpl extends Populate {
 	 * @param have
 	 */
 	@DataBoundConstructor
-	public ForceCleanImpl(boolean have, boolean modtime, boolean quiet,
-			String pin) {
-		super(have, true, modtime, quiet, pin);
+	public ForceCleanImpl(boolean have, boolean force, boolean modtime,
+			boolean quiet, String pin,
+			boolean replace, boolean delete, boolean revert) {
+		super(have, true, modtime, quiet, pin, false, false, false);
 	}
 
 	@Extension

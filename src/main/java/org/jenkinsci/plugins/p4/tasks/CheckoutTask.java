@@ -11,6 +11,7 @@ import org.jenkinsci.plugins.p4.changes.P4ChangeEntry;
 import org.jenkinsci.plugins.p4.changes.P4Revision;
 import org.jenkinsci.plugins.p4.client.ClientHelper;
 import org.jenkinsci.plugins.p4.populate.Populate;
+import org.jenkinsci.plugins.p4.populate.EnvVarImpl;
 import org.jenkinsci.plugins.p4.review.ReviewProp;
 import org.jenkinsci.plugins.p4.workspace.Expand;
 import org.jenkinsci.plugins.p4.workspace.Workspace;
@@ -151,6 +152,18 @@ public class CheckoutTask extends AbstractTask implements FileCallable<Boolean>,
 					}
 				}
 			}
+		}
+
+		if (populate instanceof EnvVarImpl) {
+			// Expand populate type string with environment vars
+			EnvVarImpl envVarImplPopulate = (EnvVarImpl)populate;
+			String populateTypeString = envVarImplPopulate.getPopulateTypeString();
+			if (populateTypeString == null) populateTypeString = "";
+			String expandedPopulateTypeString = expand.format(populateTypeString, false);
+			envVarImplPopulate.setExpandedPopulateTypeString(expandedPopulateTypeString);
+
+			ClientHelper p4 = getConnection();
+			p4.log("EnvVar populate type set to " + envVarImplPopulate.getPopulateType());
 		}
 
 		// if change is specified then update

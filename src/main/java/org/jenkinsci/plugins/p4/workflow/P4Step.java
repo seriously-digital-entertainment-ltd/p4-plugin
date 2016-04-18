@@ -106,7 +106,8 @@ public class P4Step extends SCMStep {
 		}
 
 		// TODO: add populate options?
-		Populate populate = new AutoCleanImpl(true, true, false, false, null);
+		//Populate populate = new AutoCleanImpl(true, true, false, false, null);
+		Populate populate = new AutoCleanImpl(false, false, false, false, null, true, true, false);
 
 		PerforceScm scm = new PerforceScm(credential, workspace, null,
 				populate, browser);

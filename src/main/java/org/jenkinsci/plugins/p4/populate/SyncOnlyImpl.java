@@ -6,9 +6,9 @@ import hudson.Extension;
 
 public class SyncOnlyImpl extends Populate {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 2L;
 
-	private final boolean revert;
+	// uses revert
 
 	/**
 	 * Sync only (optional have update)
@@ -16,13 +16,10 @@ public class SyncOnlyImpl extends Populate {
 	 * @param have
 	 */
 	@DataBoundConstructor
-	public SyncOnlyImpl(boolean revert, boolean have, boolean modtime, boolean quiet, String pin) {
-		super(have, false, modtime, quiet, pin);
-		this.revert = revert;
-	}
-
-	public boolean isRevert() {
-		return revert;
+	public SyncOnlyImpl(boolean have, boolean force, boolean modtime,
+			boolean quiet, String pin,
+			boolean replace, boolean delete, boolean revert) {
+		super(have, false, modtime, quiet, pin, false, false, revert);
 	}
 
 	@Extension

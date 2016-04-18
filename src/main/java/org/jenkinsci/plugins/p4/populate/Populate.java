@@ -11,23 +11,46 @@ import jenkins.model.Jenkins;
 public abstract class Populate implements ExtensionPoint,
 		Describable<Populate>, Serializable {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 2L;
 
-	private final boolean have; // ! sync '-p'
-	private final boolean force; // sync '-f'
-	private final boolean modtime;
-	private final boolean quiet; // task '-q'
-	private final String pin;
+	protected boolean have; // ! sync '-p'
+	protected boolean force; // sync '-f'
+	protected boolean modtime;
+	protected boolean quiet; // task '-q'
+	protected String pin;
+
+	// auto clean only
+	protected boolean replace;
+	protected boolean delete;
+
+	// sync only
+	protected boolean revert;
 
 	public Populate(boolean have, boolean force, boolean modtime,
-			boolean quiet, String pin) {
+			boolean quiet, String pin,
+			boolean replace, boolean delete, boolean revert)
+	{
+		Set(have, force, modtime,
+			quiet, pin,
+			replace, delete, revert);
+	}
+
+	protected void Set(boolean have, boolean force, boolean modtime,
+			boolean quiet, String pin,
+			boolean replace, boolean delete, boolean revert)
+	{
 		this.have = have;
 		this.force = force;
 		this.modtime = modtime;
 		this.pin = pin;
 		this.quiet = quiet;
+
+		this.replace = replace;
+		this.delete = delete;
+		this.revert = revert;
 	}
 
+	// variables
 	public boolean isHave() {
 		return have;
 	}
@@ -48,6 +71,21 @@ public abstract class Populate implements ExtensionPoint,
 		return pin;
 	}
 
+	// auto clean only
+	public boolean isReplace() {
+		return replace;
+	}
+
+	public boolean isDelete() {
+		return delete;
+	}
+
+	// sync only
+	public boolean isRevert() {
+		return revert;
+	}
+
+	// other
 	public PopulateDescriptor getDescriptor() {
 		return (PopulateDescriptor) Jenkins.getInstance().getDescriptor(
 				getClass());
@@ -57,5 +95,9 @@ public abstract class Populate implements ExtensionPoint,
 		return Jenkins.getInstance()
 				.<Populate, PopulateDescriptor> getDescriptorList(
 						Populate.class);
+	}
+
+	public boolean implementsPopulateType(Class populateClass) {
+		return getClass().isInstance(populateClass);
 	}
 }
