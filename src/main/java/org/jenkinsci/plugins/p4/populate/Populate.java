@@ -102,6 +102,6 @@ public abstract class Populate implements ExtensionPoint, Describable<Populate>,
 	}
 
 	public boolean implementsPopulateType(Class populateClass) {
-		return getClass().isInstance(populateClass);
+		return getClass().isAssignableFrom(populateClass);
 	}
 }
