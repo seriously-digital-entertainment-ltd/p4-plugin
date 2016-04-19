@@ -24,7 +24,7 @@
 
 	<!-- FORCE CLEAN, SYNC ONLY -->
  	<f:entry>
-		<f:checkbox title="FORCE CLEAN, SYNC ONLY: ${%Populate have list}" field="have" default="false"/>
+		<f:checkbox title="FORCE CLEAN, SYNC ONLY: ${%Populate have list}" field="have" default="true"/>
 	</f:entry>
 
 

@@ -30,7 +30,7 @@ public class EnvVarImpl extends Populate {
 		boolean quiet, String pin,
 		boolean replace, boolean delete, boolean revert)
 	{
-		super(false, false, false, false, null, false, false, false);
+		super(have, force, modtime, quiet, pin, replace, delete, revert);
 		this.populateTypeString = populateTypeString;
 	}
 
