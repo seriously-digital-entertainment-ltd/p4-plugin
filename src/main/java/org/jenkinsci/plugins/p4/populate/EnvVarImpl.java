@@ -71,13 +71,13 @@ public class EnvVarImpl extends Populate {
 
 	// override
 	public boolean implementsPopulateType(Class populateClass) {
-		if (populateType == PopulateType.AutoClean && populateClass.isInstance(AutoCleanImpl.class))
+		if (populateType == PopulateType.AutoClean && populateClass.isAssignableFrom(AutoCleanImpl.class))
 			return true;
-		if (populateType == PopulateType.CheckOnly && populateClass.isInstance(CheckOnlyImpl.class))
+		if (populateType == PopulateType.CheckOnly && populateClass.isAssignableFrom(CheckOnlyImpl.class))
 			return true;
-		if (populateType == PopulateType.ForceClean && populateClass.isInstance(ForceCleanImpl.class))
+		if (populateType == PopulateType.ForceClean && populateClass.isAssignableFrom(ForceCleanImpl.class))
 			return true;
-		if (populateType == PopulateType.SyncOnly && populateClass.isInstance(SyncOnlyImpl.class))
+		if (populateType == PopulateType.SyncOnly && populateClass.isAssignableFrom(SyncOnlyImpl.class))
 			return true;
 		return false;
 	}

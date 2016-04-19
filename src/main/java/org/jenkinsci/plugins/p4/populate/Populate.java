@@ -98,6 +98,6 @@ public abstract class Populate implements ExtensionPoint,
 	}
 
 	public boolean implementsPopulateType(Class populateClass) {
-		return getClass().isInstance(populateClass);
+		return getClass().isAssignableFrom(populateClass);
 	}
 }
