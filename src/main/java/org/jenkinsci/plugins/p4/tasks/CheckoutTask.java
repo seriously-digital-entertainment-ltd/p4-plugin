@@ -157,7 +157,7 @@ public class CheckoutTask extends AbstractTask implements FileCallable<Boolean>,
 		if (populate instanceof EnvVarImpl) {
 			// Expand populate type string with environment vars
 			EnvVarImpl envVarImplPopulate = (EnvVarImpl)populate;
-			String populateTypeString = envVarImplPopulate.getPopulateTypeString();
+			String populateTypeString = envVarImplPopulate.populateTypeString;
 			if (populateTypeString == null) populateTypeString = "";
 			String expandedPopulateTypeString = expand.format(populateTypeString, false);
 			envVarImplPopulate.setExpandedPopulateTypeString(expandedPopulateTypeString);

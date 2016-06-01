@@ -4,16 +4,16 @@
 	</f:entry>
 
  	<!-- SHARED -->
-	<f:entry field="quiet">
+	<f:entry field="quiet_fromData">
 		<f:checkbox title="${%QUIET Perforce messages}" default="true"/>
 	</f:entry>
 	
 	<!-- AUTO CLEAN, FORCE CLEAN, SYNC ONLY -->
-	<f:entry field="modtime">
+	<f:entry field="modtime_fromData">
 		<f:checkbox title="AUTO CLEAN, FORCE CLEAN, SYNC ONLY: ${%Sync with MODTIME for consistency check}" default="false"/>
 	</f:entry>
 	
-	<f:entry field="pin">
+	<f:entry field="pin_fromData">
 		<table border="0" width="100%">
 			<tr>
 				<td nowrap="true">AUTO CLEAN, FORCE CLEAN, SYNC ONLY: Pin build at Perforce Label</td>
@@ -24,16 +24,16 @@
 
 	<!-- FORCE CLEAN, SYNC ONLY -->
  	<f:entry>
-		<f:checkbox title="FORCE CLEAN, SYNC ONLY: ${%Populate have list}" field="have" default="false"/>
+		<f:checkbox title="FORCE CLEAN, SYNC ONLY: ${%Populate have list}" field="have_fromData" default="false"/>
 	</f:entry>
 
 
  	<!-- AUTO CLEAN -->
-	<f:entry field="replace">
+	<f:entry field="replace_fromData">
 		<f:checkbox title="AUTO CLEAN: ${%REPLACE missing/modified files}" default="true"/>
 	</f:entry>
 		
-	<f:entry field="delete">
+	<f:entry field="delete_fromData">
 		<f:checkbox title="AUTO CLEAN: ${%DELETE generated files}" default="true"/>
 	</f:entry>
 
@@ -42,7 +42,7 @@
  	<!-- FORCE CLEAN -->
 
  	<!-- SYNC ONLY -->
-	<f:entry field="revert">
+	<f:entry field="revert_fromData">
 		<f:checkbox title="SYNC ONLY: ${%Revert any open or unshelved files}" default="false"/>
 	</f:entry>
 </j:jelly>

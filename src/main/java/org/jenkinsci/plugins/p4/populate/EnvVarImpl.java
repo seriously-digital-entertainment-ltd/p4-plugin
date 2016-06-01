@@ -8,9 +8,17 @@ public class EnvVarImpl extends Populate {
 
 	private static final long serialVersionUID = 1L;
 
-	private final String populateTypeString;
-
+	public final String populateTypeString;
 	private String expandedPopulateTypeString;
+
+	public final boolean have_fromData;
+	public final boolean modtime_fromData;
+	public final boolean quiet_fromData;
+    public final String pin_fromData;
+	public final boolean replace_fromData;
+	public final boolean delete_fromData;
+    public final boolean revert_fromData;
+
 	public enum PopulateType {
 		AutoClean,
 		CheckOnly,
@@ -26,16 +34,20 @@ public class EnvVarImpl extends Populate {
 	 */
 	@DataBoundConstructor
 	public EnvVarImpl(String populateTypeString,
-		boolean have, boolean force, boolean modtime,
-		boolean quiet, String pin, ParallelSync parallel,
-		boolean replace, boolean delete, boolean revert)
+		boolean have_fromData, boolean force, boolean modtime_fromData,
+		boolean quiet_fromData, String pin_fromData, ParallelSync parallel,
+		boolean replace_fromData, boolean delete_fromData, boolean revert_fromData)
 	{
-		super(have, force, modtime, quiet, pin, parallel, replace, delete, revert);
+		super(have_fromData, force, modtime_fromData, quiet_fromData, pin_fromData, parallel, replace_fromData, delete_fromData, revert_fromData);
 		this.populateTypeString = populateTypeString;
-	}
 
-	public String getPopulateTypeString() {
-		return populateTypeString;
+		this.have_fromData = have_fromData;
+		this.modtime_fromData = modtime_fromData;
+		this.quiet_fromData = quiet_fromData;
+		this.pin_fromData = pin_fromData;
+		this.replace_fromData = replace_fromData;
+		this.delete_fromData = delete_fromData;
+		this.revert_fromData = revert_fromData;
 	}
 
 	public void setExpandedPopulateTypeString(String expandedPopulateTypeString) {
@@ -49,22 +61,20 @@ public class EnvVarImpl extends Populate {
 
 		switch (populateType) {
 			case AutoClean:
-				Set(true, false, modtime, quiet, pin, parallel, replace, delete, false);
+				Set(true, false, modtime_fromData, quiet_fromData, pin_fromData, parallel, replace_fromData, delete_fromData, false);
 				break;
 			case CheckOnly:
-				Set(false, false, false, quiet, null, parallel, false, false, false);
+				Set(false, false, false, quiet_fromData, null, parallel, false, false, false);
 				break;
 			case ForceClean:
-				Set(have, true, modtime, quiet, pin, parallel, false, false, false);
+				Set(have_fromData, true, modtime_fromData, quiet_fromData, pin_fromData, parallel, false, false, false);
 				break;
 			case SyncOnly:
-				Set(have, false, modtime, quiet, pin, parallel, false, false, revert);
+				Set(have_fromData, false, modtime_fromData, quiet_fromData, pin_fromData, parallel, false, false, revert_fromData);
 				break;
 		}
 	}
-	public String getExpandedType() {
-		return expandedPopulateTypeString;
-	}
+
 	public PopulateType getPopulateType() {
 		return populateType;
 	}
