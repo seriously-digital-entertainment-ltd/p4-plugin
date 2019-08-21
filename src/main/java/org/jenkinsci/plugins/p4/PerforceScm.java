@@ -247,47 +247,55 @@ public class PerforceScm extends SCM {
 		task.setListener(listener);
 		task.setCredential(credential);
 
-		// Get workspace used for the Task
-		Workspace ws = task.setEnvironment(run, workspace, buildWorkspace);
-
-		// Set changes to build (used by polling), MUST clear after use.
-		ws = task.setNextChange(ws, changes);
-		changes = new ArrayList<Integer>();
-
-		// Set the Workspace and initialise
-		task.setWorkspace(ws);
-		task.initialise();
-
-		// Add tagging action to build, enabling label support.
-		TagAction tag = new TagAction(run);
-		tag.setCredential(credential);
-		tag.setWorkspace(ws);
-		tag.setBuildChange(task.getSyncChange());
-		run.addAction(tag);
-
-		// Invoke build.
-		String node = ws.getExpand().get("NODE_NAME");
+		boolean skipParentSyncInMatrixBuilds = true; // TODO: add a checkbox for "Skip parent sync in matrix builds" instead of hard-coding this
 		Job<?, ?> job = run.getParent();
-		if (run instanceof MatrixBuild) {
-			parentChange = task.getSyncChange();
-			if (isBuildParent(job)) {
-				log.println("Building Parent on Node: " + node);
-				success &= buildWorkspace.act(task);
-			} else {
-				listener.getLogger().println("Skipping Parent build...");
-				success = true;
-			}
-		} else {
-			if (job instanceof MatrixProject) {
-				if (parentChange != null) {
-					log.println("Using parent change: " + parentChange);
-					task.setBuildChange(parentChange);
+		if (skipParentSyncInMatrixBuilds && run instanceof MatrixBuild && !isBuildParent(job)) {
+			listener.getLogger().println("Skipping entire Parent build...");
+			success = true;
+			changelogFile = null; // force to null, to prevent change calculation from incomplete state
+		}
+		else {
+			// Get workspace used for the Task
+			Workspace ws = task.setEnvironment(run, workspace, buildWorkspace);
+
+			// Set changes to build (used by polling), MUST clear after use.
+			ws = task.setNextChange(ws, changes);
+			changes = new ArrayList<Integer>();
+
+			// Set the Workspace and initialise
+			task.setWorkspace(ws);
+			task.initialise();
+
+			// Add tagging action to build, enabling label support.
+			TagAction tag = new TagAction(run);
+			tag.setCredential(credential);
+			tag.setWorkspace(ws);
+			tag.setBuildChange(task.getSyncChange());
+			run.addAction(tag);
+
+			// Invoke build.
+			String node = ws.getExpand().get("NODE_NAME");
+			if (run instanceof MatrixBuild) {
+				parentChange = task.getSyncChange();
+				if (isBuildParent(job)) {
+					log.println("Building Parent on Node: " + node);
+					success &= buildWorkspace.act(task);
+				} else {
+					listener.getLogger().println("Skipping Parent build...");
+					success = true;
 				}
-				log.println("Building Child on Node: " + node);
 			} else {
-				log.println("Building on Node: " + node);
+				if (job instanceof MatrixProject) {
+					if (parentChange != null) {
+						log.println("Using parent change: " + parentChange);
+						task.setBuildChange(parentChange);
+					}
+					log.println("Building Child on Node: " + node);
+				} else {
+					log.println("Building on Node: " + node);
+				}
+				success &= buildWorkspace.act(task);
 			}
-			success &= buildWorkspace.act(task);
 		}
 
 		// Only write change log if build succeeded and changeLogFile has been

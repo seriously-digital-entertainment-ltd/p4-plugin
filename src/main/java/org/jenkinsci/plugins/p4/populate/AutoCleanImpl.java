@@ -6,25 +6,15 @@ import org.kohsuke.stapler.DataBoundConstructor;
 
 public class AutoCleanImpl extends Populate {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 2L;
 	
-	private final boolean replace;
-	private final boolean delete;
+	// usess replace, delete
 
 	@DataBoundConstructor
-	public AutoCleanImpl(boolean replace, boolean delete, boolean modtime,
-			boolean quiet, String pin) {
-		super(true, false, modtime, quiet, pin); // normal sync; no -f, no -p
-		this.replace = replace;
-		this.delete = delete;
-	}
-
-	public boolean isReplace() {
-		return replace;
-	}
-
-	public boolean isDelete() {
-		return delete;
+	public AutoCleanImpl(boolean have, boolean force, boolean modtime,
+			boolean quiet, String pin,
+			boolean replace, boolean delete, boolean revert) {
+		super(true, false, modtime, quiet, pin, replace, delete, false); // normal sync; no -f, no -p
 	}
 
 	@Extension

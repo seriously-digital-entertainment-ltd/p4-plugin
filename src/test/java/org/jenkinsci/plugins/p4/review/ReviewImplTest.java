@@ -38,7 +38,7 @@ public class ReviewImplTest {
 		FreeStyleProject project = jenkins
 				.createFreeStyleProject("StaticReview");
 		Workspace workspace = new StaticWorkspaceImpl("none", false, client);
-		Populate populate = new AutoCleanImpl(true, true, false, false, null);
+		Populate populate = new AutoCleanImpl(false, false, false, false, null, true, true, false);
 		PerforceScm scm = new PerforceScm(credential, workspace, populate);
 		project.setScm(scm);
 		project.save();
